@@ -7,7 +7,7 @@ exports.authenicateUser = (req,res,next)=>{
     console.log('$$$$$$$$$$$$$$$$$$$$')
     
 
-    console.log(req.headers,"headers")
+    console.log(req.headers["authorization"],"headers")
     // console.table(token)
     if(!token) return res.status(401).send('no token')
     // jwt.verify(token,accessTokenSecret,(err,user)=>{

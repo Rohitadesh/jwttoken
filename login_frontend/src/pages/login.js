@@ -3,7 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 const login = () =>{
-   function formsubmit(e){
+    let route =useRouter()
+    function formsubmit(e){
         e.preventDefault()
         let formdata =new FormData(e.currentTarget)
         const loginform ={}
@@ -11,9 +12,43 @@ const login = () =>{
             loginform[name]=value
         } 
         console.log(loginform)
-        axios.post('http://localhost:8000/login',loginform).then(response=>console.log(response))
+        axios.post('http://localhost:8000/login',loginform).then(response=>{
+            console.log(response)    
+        let token =response.data
+            if(token.length>0){
+                axios.defaults.headers.common["authorization"]=`${token}`;
+                localStorage.setItem("token",token)  
+                route.push('/home')
+            }
+            else{
+                localStorage.removeItem('token')
+                delete axios.defaults.headers.common["authorization"];
+                route.push('/login')
+            }
+            
+        })
         .catch(error=>console.log(error))
-       
+   
+   
+   
+   
+   
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('POST','http://localhost:8000/login',[true])
+        // xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+        // // xhr.responseType = 'json';
+        // // xhr.setResponseHeader('Content-type', 'application/json; charset=utf-8');
+        // let json=JSON.stringify(loginform)
+        // xhr.onload = ( ) =>{
+        //     // xhr.getResponseHeader('Content-Type')
+        //     let xhr_object=xhr.response
+        //     console.log(xhr_object)
+        // }
+        // xhr.onerror = () =>{
+        //     console.log("network error")
+        // }
+        // xhr.send(json)
+        // console.log("helloworld")
    }
     return(
         <div className="h-screen w-screen border border-black border solid flex flex-wrap flex-col items-center justify-center">

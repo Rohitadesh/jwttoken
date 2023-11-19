@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { useState } from "react";
+// import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 export default function Home() {
-  const [login,setlogin] =useState({})
+  // const [login,setlogin] =useState({})
   const route =useRouter()
   function formsubmit (e) {
     e.preventDefault()
