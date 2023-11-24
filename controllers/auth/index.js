@@ -19,7 +19,7 @@ const verify = async (req,res)=>{
       // console.log(result)
       let accesstokens= jwt.sign(...result,accessTokenSecret)
       console.log(accesstokens)
-      res.status(200).send(accesstokens)
+      res.status(200).send({...result,accesstokens})
     }
     catch(error){
       console.log(error)
